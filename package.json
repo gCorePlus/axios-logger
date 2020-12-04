@@ -1,0 +1,80 @@
+{
+  "name": "@gcoreplus/axios-logger",
+  "version": "0.0.1-alpha.0",
+  "description": "Logger for Axios",
+  "author": "Rennan Stefan Boni",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "files": [
+    "dist/",
+    "README.MD",
+    "LICENCE.MD"
+  ],
+  "homepage": "https://rennanboni.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gCorePlus/axios-logger.git"
+  },
+  "contributors": [
+    {
+      "name": "Rennan Stefan Boni",
+      "email": "rennanboni@gmail.com"
+    }
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "build": "tsc -p tsconfig.build.json",
+    "format": "prettier --write \"lib/**/*.ts\"",
+    "publish:npm": "npm publish --access public",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:codecov": "codecov",
+    "test:debug": "node --inspect-brk -r ts-node/register node_modules/.bin/jest --runInBand"
+  },
+  "keywords": [
+    "axios",
+    "axios-logger",
+    "beautify",
+    "http",
+    "https",
+    "interceptor",
+    "javascript",
+    "library",
+    "log",
+    "logger",
+    "network",
+    "nodejs",
+    "server"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "@types/dateformat": "^3.0.1",
+    "dateformat": "^3.0.3",
+    "fast-redact": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/fast-redact": "^2.0.0",
+    "axios": "^0.21.0",
+    "codecov": "^3.7.2",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.3.0",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "lib",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
+}
