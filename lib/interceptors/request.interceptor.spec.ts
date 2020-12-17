@@ -2,7 +2,7 @@ import { requestLogger } from './request.interceptor';
 import { ConfigService, setGlobalConfig } from '../config.service';
 import { AxiosRequestConfig } from 'axios';
 import { ObjectLoggerBuilder, StringLoggerBuilder } from '../log-builders';
-import { GlobalLogConfig, RequestLogConfig } from '../interfaces';
+import { ErrorLogConfig, GlobalLogConfig, RequestLogConfig } from '../interfaces';
 
 const axiosRequest: AxiosRequestConfig = {
   params: {
@@ -131,6 +131,30 @@ describe('RequestInterceptor', () => {
       requestLogger(axiosRequest, config);
       expect(buildFuncSpy).toHaveBeenCalled();
       expect(buildFuncSpy).toHaveReturnedWith(expect.not.stringContaining('[Axios]'));
+    });
+
+    it('should log custom datetime format', () => {
+      const localConfig = {
+        dateFormat: 'dddd, mmmm dS, yyyy, h:MM:ss TT'
+      } as GlobalLogConfig;
+
+      const mockDate = new Date(1608248123028);
+      const dateSpy = jest
+        .spyOn(global, 'Date')
+        .mockReturnValue(mockDate as unknown as string);
+
+      const logger = new StringLoggerBuilder(ConfigService.assembleBuildConfig(localConfig));
+      const buildFuncSpy = jest.spyOn(logger, 'build');
+      const config: ErrorLogConfig = {
+        logger: console.log,
+        createLoggerBuilder: () => logger
+      };
+
+      requestLogger(axiosRequest, config);
+      dateSpy.mockRestore();
+
+      expect(buildFuncSpy).toHaveBeenCalled();
+      expect(buildFuncSpy).toHaveReturnedWith(expect.stringContaining('Thursday, December 17th, 2020, 8:35:23 PM'));
     });
 
     describe('Redact', () => {
@@ -328,6 +352,36 @@ describe('RequestInterceptor', () => {
         expect.objectContaining({
           axios: expect.objectContaining({
             prefix: 'Axios'
+          }),
+        }),
+      );
+    });
+
+    it('should log custom datetime format', () => {
+      const localConfig = {
+        dateFormat: 'dddd, mmmm dS, yyyy, h:MM:ss TT'
+      } as GlobalLogConfig;
+
+      const mockDate = new Date(1608248123028);
+      const dateSpy = jest
+        .spyOn(global, 'Date')
+        .mockReturnValue(mockDate as unknown as string);
+
+      const logger = new ObjectLoggerBuilder(ConfigService.assembleBuildConfig(localConfig));
+      const buildFuncSpy = jest.spyOn(logger, 'build');
+      const config: ErrorLogConfig = {
+        logger: console.log,
+        createLoggerBuilder: () => logger
+      };
+
+      requestLogger(axiosRequest, config);
+      dateSpy.mockRestore();
+
+      expect(buildFuncSpy).toHaveBeenCalled();
+      expect(buildFuncSpy).toHaveReturnedWith(
+        expect.objectContaining({
+          axios: expect.objectContaining({
+            datetime: expect.stringContaining('Thursday, December 17th, 2020, 8:35:23 PM'),
           }),
         }),
       );

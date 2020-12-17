@@ -1,6 +1,6 @@
 {
   "name": "@gcoreplus/axios-logger",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Logger for Axios",
   "author": "Rennan Stefan Boni",
   "main": "./dist/index.js",
@@ -26,10 +26,12 @@
     "prebuild": "npm run clean",
     "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"lib/**/*.ts\"",
+    "prepublish:npm": "npm run build",
     "publish:npm": "npm publish --access public",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
+    "pretest:codecov": "npm run test:cov",
     "test:codecov": "codecov",
     "test:debug": "node --inspect-brk -r ts-node/register node_modules/.bin/jest --runInBand"
   },
