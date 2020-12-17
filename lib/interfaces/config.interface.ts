@@ -7,6 +7,7 @@ export interface CommonConfig {
   dateFormat?: string | boolean;
   headers?: ApplyLogConfig;
   logger: (text: string) => any;
+  createLoggerBuilder?: (config: GlobalLogConfig) => LoggerBuilder;
 }
 
 export interface GlobalLogConfig extends CommonConfig {
@@ -16,7 +17,6 @@ export interface GlobalLogConfig extends CommonConfig {
   params?: ApplyLogConfig;
   status?: boolean;
   statusText?: boolean;
-  createLoggerBuilder?: (config: GlobalLogConfig) => LoggerBuilder;
 }
 
 export interface ApplyLogConfig {

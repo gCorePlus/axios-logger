@@ -1,4 +1,5 @@
 import * as fastRedact from 'fast-redact';
+import * as dateformat from 'dateformat';
 
 import { GlobalLogConfig, LoggerBuilder } from '../interfaces';
 
@@ -36,10 +37,9 @@ export class ObjectLoggerBuilder implements LoggerBuilder {
 
   makeDateFormat(date: Date) {
     // allow for opting-out of adding the timestamp (as most loggers already add this)
-    if (this.config?.dateFormat !== false) {
-      // @ts-ignore
-      const dateFormat = dateformat(date, this.config.dateFormat || 'isoDateTime');
-      this.log.axios.datetime = dateFormat;
+    if (this.config?.dateFormat) {
+      const format: string = typeof this.config.dateFormat === 'boolean' ? 'isoDateTime' : this.config.dateFormat;
+      this.log.axios.datetime = dateformat(date, format);
     }
     return this;
   }
@@ -53,7 +53,7 @@ export class ObjectLoggerBuilder implements LoggerBuilder {
         }
       }
 
-      if (this.config.headers.redact) {
+      if (this.config.headers.redact && typeof headers === 'object') {
         const redact = fastRedact(this.config.headers.redact);
         headerMap = JSON.parse(redact<any>(headerMap));
       }
@@ -73,7 +73,7 @@ export class ObjectLoggerBuilder implements LoggerBuilder {
   makeParams(params?: any): LoggerBuilder {
     if (this.config?.params?.apply && params) {
       let result = params;
-      if (this.config.params.redact) {
+      if (this.config.params.redact && typeof params === 'object') {
         const redact = fastRedact(this.config.params.redact);
         result = JSON.parse(redact<any>(params));
       }
@@ -94,7 +94,7 @@ export class ObjectLoggerBuilder implements LoggerBuilder {
   makeData(data: object) {
     if (this.config?.data?.apply && data) {
       let result = data;
-      if (this.config.data.redact) {
+      if (this.config.data.redact && typeof data === 'object') {
         const redact = fastRedact(this.config.data.redact);
         result = JSON.parse(redact<any>(data));
       }

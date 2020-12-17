@@ -1,4 +1,5 @@
 import * as fastRedact from 'fast-redact';
+import * as dateformat from 'dateformat';
 
 import { GlobalLogConfig, LoggerBuilder } from '../interfaces';
 
@@ -20,10 +21,9 @@ export class StringLoggerBuilder implements LoggerBuilder {
 
   makeDateFormat(date: Date): LoggerBuilder {
     // allow for opting-out of adding the timestamp (as most loggers already add this)
-    if (this.config?.dateFormat !== false) {
-      // @ts-ignore
-      const dateFormat = dateformat(date, this.config.dateFormat || 'isoDateTime');
-      this.printQueue.push(dateFormat);
+    if (this.config?.dateFormat && date) {
+      const format: string = typeof this.config.dateFormat === 'boolean' ? 'isoDateTime' : this.config.dateFormat;
+      this.printQueue.push(dateformat(date, format));
     }
 
     return this;

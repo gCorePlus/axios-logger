@@ -1,5 +1,5 @@
-[![npm version](http://img.shields.io/npm/v/@gcoreplus/axios-logger.svg?style=flat)](https://npmjs.org/package/@gCorePlus/shortid "View this project on npm")
-[![Codecov Coverage](https://codecov.io/gh/gCorePlus/axios-logger/branch/master/graph/badge.svg)](https://codecov.io/gh/gCorePlus/shortid)
+[![npm version](http://img.shields.io/npm/v/@gcoreplus/axios-logger.svg?style=flat)](https://npmjs.org/package/@gCorePlus/axios-logger "View this project on npm")
+[![Codecov Coverage](https://codecov.io/gh/gCorePlus/axios-logger/branch/master/graph/badge.svg)](https://codecov.io/gh/gCorePlus/axios-logger)
 [![ISC license](http://img.shields.io/badge/license-ISC-brightgreen.svg)](http://opensource.org/licenses/ISC)
 
 # Axios Logger
@@ -66,9 +66,10 @@ AxiosLogger.setGlobalConfig({
 | `logger`              | function<string, any>                                               | `console.log`                     | Allows users to customize the logger function to be used. e.g. Winston's `logger.info` could be leveraged, like this: `logger.info.bind(this)` |
 | `createLoggerBuilder` | function<config> => LoggerBuilder                                   | `new StringLoggerBuilder(config)` | Allows to customize the logger output. Possible values, `new StringLoggerBuilder(config)` and `new ObjectLoggerBuilder(config)`                |
 
-#### Redact with fast-redact - RedactOptions
+#### Redact with fast-redact - [RedactOptions]
 
 `@gcoreplus/axios-logger` uses fast-redact to handle restrict data
+
 For more information see [fast-redact](https://www.npmjs.com/package/fast-redact) and [redact documentation](https://getpino.io/#/docs/redaction)
 
 Redact configuration example
