@@ -1,0 +1,42 @@
+name: create-release
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      NEW_VERSION:
+        description: 'npm version'
+        required: true
+        default: prerelease --preid=rc
+        type: choice
+        options:
+          - prepatch --preid=rc
+          - preminor --preid=rc
+          - premajor --preid=rc
+          - prerelease --preid=rc
+          - patch
+          - minor
+          - major
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: "${{secrets.GH_TOKEN}}"
+          ref: ${{github.ref_name}}
+          fetch-depth: 0
+      - name: Git Setup
+        run: |
+          git config --global user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+          git config --global user.name "${{github.actor}}"
+      - name: New Version
+        run: npm version ${{inputs.NEW_VERSION}} --tag-version-prefix=""
+      - name: Push Tags
+        run: |
+          git push origin refs/tags/$(git describe --tags `git rev-list --tags --max-count=1`)
+      - name: Push Origin Branch
+        run: |
+          git push origin ${{github.ref_name}}

@@ -155,13 +155,13 @@ describe('ErrorInterceptor', () => {
 
     it('should log custom datetime format', () => {
       const localConfig = {
-        dateFormat: 'dddd, mmmm dS, yyyy, h:MM:ss TT'
+        dateFormat: 'dddd, MMMM Do, YYYY, LTS'
       } as GlobalLogConfig;
 
       const mockDate = new Date(1608248123028);
       const dateSpy = jest
         .spyOn(global, 'Date')
-        .mockReturnValue(mockDate as unknown as string);
+        .mockReturnValue(mockDate);
 
       const logger = new StringLoggerBuilder(ConfigService.assembleBuildConfig(localConfig));
       const buildFuncSpy = jest.spyOn(logger, 'build');
@@ -388,13 +388,13 @@ describe('ErrorInterceptor', () => {
 
     it('should log custom datetime format', () => {
       const localConfig = {
-        dateFormat: 'dddd, mmmm dS, yyyy, h:MM:ss TT'
+        dateFormat: 'dddd, MMMM Do, YYYY, LTS'
       } as GlobalLogConfig;
 
       const mockDate = new Date(1608248123028);
       const dateSpy = jest
         .spyOn(global, 'Date')
-        .mockReturnValue(mockDate as unknown as string);
+        .mockReturnValue(mockDate);
 
       const logger = new ObjectLoggerBuilder(ConfigService.assembleBuildConfig(localConfig));
       const buildFuncSpy = jest.spyOn(logger, 'build');

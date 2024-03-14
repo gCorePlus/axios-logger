@@ -1,12 +1,12 @@
-import { AxiosError } from 'axios';
-
+import { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { ConfigService } from '../config.service';
 import { ErrorLogConfig, GlobalLogConfig, LoggerBuilder } from '../interfaces';
 
 export const errorLoggerWithoutPromise = (error: AxiosError, config?: ErrorLogConfig) => {
 
   if (error.isAxiosError) {
-    const { config: { method, url, params }, response } = error;
+    const { config: _config, response } = error;
+    const { method, url, params } = _config as InternalAxiosRequestConfig<any>;
 
     let status, statusText, data, headers;
     if (response) {
@@ -26,7 +26,7 @@ export const errorLoggerWithoutPromise = (error: AxiosError, config?: ErrorLogCo
         .makeUrl(url)
         .makeParams(params)
         .makeStatus(status, statusText)
-        .makeHeader(headers)
+        .makeHeader(headers as any)
         .makeData(data)
         .build();
 

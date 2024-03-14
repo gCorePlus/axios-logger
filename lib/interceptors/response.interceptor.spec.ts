@@ -1,8 +1,8 @@
 import { responseLogger } from './response.interceptor';
 import { ConfigService, setGlobalConfig } from '../config.service';
-import { AxiosResponse } from 'axios';
 import { ObjectLoggerBuilder, StringLoggerBuilder } from '../log-builders';
 import { ErrorLogConfig, GlobalLogConfig, RequestLogConfig, ResponseLogConfig } from '../interfaces';
+import { AxiosResponse } from 'axios';
 
 const axiosResponse: AxiosResponse = {
   headers: {
@@ -15,7 +15,7 @@ const axiosResponse: AxiosResponse = {
     params: {
       param: 'param_01',
       'param-restrict-data': 'PARAM_RESTRICT_DATA'
-    },
+    }
   },
   data: {
     id: 2,
@@ -24,7 +24,7 @@ const axiosResponse: AxiosResponse = {
   },
   status: 500,
   statusText: 'internal server error',
-};
+} as any as AxiosResponse;
 
 describe('ResponseInterceptor', () => {
 
@@ -140,13 +140,13 @@ describe('ResponseInterceptor', () => {
 
     it('should log custom datetime format', () => {
       const localConfig = {
-        dateFormat: 'dddd, mmmm dS, yyyy, h:MM:ss TT'
+        dateFormat: 'dddd, MMMM Do, YYYY, LTS'
       } as GlobalLogConfig;
 
       const mockDate = new Date(1608248123028);
       const dateSpy = jest
         .spyOn(global, 'Date')
-        .mockReturnValue(mockDate as unknown as string);
+        .mockReturnValue(mockDate);
 
       const logger = new StringLoggerBuilder(ConfigService.assembleBuildConfig(localConfig));
       const buildFuncSpy = jest.spyOn(logger, 'build');
@@ -344,13 +344,13 @@ describe('ResponseInterceptor', () => {
 
     it('should log custom datetime format', () => {
       const localConfig = {
-        dateFormat: 'dddd, mmmm dS, yyyy, h:MM:ss TT'
+        dateFormat: 'dddd, MMMM Do, YYYY, LTS'
       } as GlobalLogConfig;
 
       const mockDate = new Date(1608248123028);
       const dateSpy = jest
         .spyOn(global, 'Date')
-        .mockReturnValue(mockDate as unknown as string);
+        .mockReturnValue(mockDate);
 
       const logger = new ObjectLoggerBuilder(ConfigService.assembleBuildConfig(localConfig));
       const buildFuncSpy = jest.spyOn(logger, 'build');

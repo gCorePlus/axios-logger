@@ -1,6 +1,5 @@
 import * as fastRedact from 'fast-redact';
-import * as dateformat from 'dateformat';
-
+import * as moment from 'moment';
 import { GlobalLogConfig, LoggerBuilder } from '../interfaces';
 
 export class StringLoggerBuilder implements LoggerBuilder {
@@ -22,8 +21,7 @@ export class StringLoggerBuilder implements LoggerBuilder {
   makeDateFormat(date: Date): LoggerBuilder {
     // allow for opting-out of adding the timestamp (as most loggers already add this)
     if (this.config?.dateFormat && date) {
-      const format: string = typeof this.config.dateFormat === 'boolean' ? 'isoDateTime' : this.config.dateFormat;
-      this.printQueue.push(dateformat(date, format));
+      this.printQueue.push(typeof this.config.dateFormat === 'boolean' ? date.toISOString() : moment(date).format(this.config.dateFormat));
     }
 
     return this;
@@ -40,7 +38,7 @@ export class StringLoggerBuilder implements LoggerBuilder {
 
       if (this.config.headers.redact) {
         const redact = fastRedact(this.config.headers.redact);
-        headerMap = redact(headerMap);
+        headerMap = redact<any>(headerMap);
       }
 
       this.printQueue.push(JSON.stringify(headerMap));
@@ -85,7 +83,7 @@ export class StringLoggerBuilder implements LoggerBuilder {
       let result = data;
       if (this.config.data.redact) {
         const redact = fastRedact(this.config.data.redact);
-        result = redact(data);
+        result = redact<any>(data);
       }
 
       this.printQueue.push(JSON.stringify(result));

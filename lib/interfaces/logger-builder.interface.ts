@@ -11,7 +11,7 @@ export interface LoggerBuilder {
 
   makeMethod(method?: string): LoggerBuilder;
 
-  makeData(data: object): LoggerBuilder;
+  makeData(data: any): LoggerBuilder;
 
   makeStatus(status?: number, statusText?: string): LoggerBuilder;
 

@@ -1,5 +1,4 @@
 import { AxiosResponse } from 'axios';
-
 import { ConfigService } from '../config.service';
 import { GlobalLogConfig, ResponseLogConfig, LoggerBuilder } from '../interfaces';
 
@@ -16,7 +15,7 @@ export const responseLogger = (response: AxiosResponse, config?: ResponseLogConf
       .makeUrl(url)
       .makeParams(params)
       .makeStatus(status, statusText)
-      .makeHeader(headers)
+      .makeHeader(headers as any)
       .makeData(data)
       .build();
 

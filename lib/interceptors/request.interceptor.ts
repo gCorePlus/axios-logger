@@ -1,9 +1,8 @@
-import { AxiosRequestConfig } from 'axios';
-
+import { InternalAxiosRequestConfig } from 'axios';
 import { ConfigService } from '../config.service';
-import { RequestLogConfig, LoggerBuilder, GlobalLogConfig } from '../interfaces';
+import { GlobalLogConfig, LoggerBuilder, RequestLogConfig } from '../interfaces';
 
-export const requestLogger = (request: AxiosRequestConfig, config?: RequestLogConfig) => {
+export const requestLogger = (request: InternalAxiosRequestConfig<any>, config?: RequestLogConfig) => {
 
   const { url, method, data, headers, params } = request;
 
@@ -16,7 +15,7 @@ export const requestLogger = (request: AxiosRequestConfig, config?: RequestLogCo
       .makeMethod(method)
       .makeUrl(url)
       .makeParams(params)
-      .makeHeader(headers)
+      .makeHeader(headers as any)
       .makeData(data)
       .build();
 
