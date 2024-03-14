@@ -140,7 +140,7 @@ describe('ResponseInterceptor', () => {
 
     it('should log custom datetime format', () => {
       const localConfig = {
-        dateFormat: 'dddd, MMMM Do, YYYY, LTS'
+        dateFormat: 'dddd, MMMM Do, YYYY, h:mm:ss A'
       } as GlobalLogConfig;
 
       const mockDate = new Date(1608248123028);
@@ -344,7 +344,7 @@ describe('ResponseInterceptor', () => {
 
     it('should log custom datetime format', () => {
       const localConfig = {
-        dateFormat: 'dddd, MMMM Do, YYYY, LTS'
+        dateFormat: 'dddd, MMMM Do, YYYY, h:mm:ss A'
       } as GlobalLogConfig;
 
       const mockDate = new Date(1608248123028);
