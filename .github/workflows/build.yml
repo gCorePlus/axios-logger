@@ -11,6 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v3
+        env:
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
         with:
           node-version: '18'
           cache: 'yarn'
