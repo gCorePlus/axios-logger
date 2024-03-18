@@ -37,7 +37,7 @@ export class ObjectLoggerBuilder implements LoggerBuilder {
   makeDateFormat(date: Date) {
     // allow for opting-out of adding the timestamp (as most loggers already add this)
     if (this.config?.dateFormat) {
-      this.log.axios.datetime = typeof this.config.dateFormat === 'boolean' ? date.toISOString() : moment(date).format(this.config.dateFormat);
+      this.log.axios.datetime = typeof this.config.dateFormat === 'boolean' ? date.toISOString() : moment(date).utc().format(this.config.dateFormat);
     }
     return this;
   }

@@ -21,7 +21,7 @@ export class StringLoggerBuilder implements LoggerBuilder {
   makeDateFormat(date: Date): LoggerBuilder {
     // allow for opting-out of adding the timestamp (as most loggers already add this)
     if (this.config?.dateFormat && date) {
-      this.printQueue.push(typeof this.config.dateFormat === 'boolean' ? date.toISOString() : moment(date).format(this.config.dateFormat));
+      this.printQueue.push(typeof this.config.dateFormat === 'boolean' ? date.toISOString() : moment(date).utc().format(this.config.dateFormat));
     }
 
     return this;

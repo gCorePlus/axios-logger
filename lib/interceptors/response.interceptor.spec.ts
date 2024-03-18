@@ -159,7 +159,7 @@ describe('ResponseInterceptor', () => {
       dateSpy.mockRestore();
 
       expect(buildFuncSpy).toHaveBeenCalled();
-      expect(buildFuncSpy).toHaveReturnedWith(expect.stringContaining('Thursday, December 17th, 2020, 8:35:23 PM'));
+      expect(buildFuncSpy).toHaveReturnedWith(expect.stringContaining('Thursday, December 17th, 2020, 23:35:23 PM'));
     });
 
     describe('Redact', () => {
@@ -366,7 +366,7 @@ describe('ResponseInterceptor', () => {
       expect(buildFuncSpy).toHaveReturnedWith(
         expect.objectContaining({
           axios: expect.objectContaining({
-            datetime: expect.stringContaining('Thursday, December 17th, 2020, 8:35:23 PM'),
+            datetime: expect.stringContaining('Thursday, December 17th, 2020, 23:35:23 PM'),
           }),
         }),
       );
