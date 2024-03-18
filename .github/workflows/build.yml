@@ -16,9 +16,10 @@ jobs:
         with:
           node-version: '18'
           cache: 'yarn'
-      - run: yarn
-      - run: yarn run build
-      - run: yarn run test
-      - run: yarn run publish:npm
+      - run: |
+          yarn
+          yarn run build
+          yarn run test
+          yarn run publish:npm
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
