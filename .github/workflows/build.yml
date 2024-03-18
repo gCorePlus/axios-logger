@@ -17,6 +17,7 @@ jobs:
           node-version: '18'
           cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
+          scope: '@gcoreplus'
       - run: |
           yarn
           yarn run build
