@@ -21,7 +21,14 @@ jobs:
       - run: |
           yarn
           yarn run build
-          yarn run test
+          yarn run test:cov
+      - uses: codecov/codecov-action@v4.0.1
+        env:
+          HAS_CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN != ''}}
+        if: ${{env.HAS_CODECOV_TOKEN == 'true'}}
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
+      - run: |
           yarn run publish:npm
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
