@@ -1,6 +1,6 @@
 {
   "name": "@gcoreplus/axios-logger",
-  "version": "2.0.2-rc.1",
+  "version": "2.0.2-rc.2",
   "description": "Logger for Axios",
   "author": "Rennan Stefan Boni",
   "main": "./dist/index.js",
